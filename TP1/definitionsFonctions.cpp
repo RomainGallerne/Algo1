@@ -1,0 +1,171 @@
+// Fichier dans lequel vous écrirez les fonctions que l'on vous demandera de définir
+
+#include "listesEtTableaux.cpp"
+
+// Fonction moyenne
+// Données: a : nombre, b : nombre
+// Résultat: Nombre, la moyenne de a et b
+float moyenne(float a, float b)
+{
+  return (a+b)/2;
+}
+
+//Fonction max3
+//Données : a : nombre, b : nombre, c : nombre
+//Résultat : Nombre, le plus grand nombre entre a,b et c
+int max3(int a, int b, int c)
+{
+  return max(a,max(b,c));
+}
+
+//Fonction multiple
+//Données : x : nombre, y : nombre
+//Résultat : Booléen, true si x est un multiple de y, false sinon
+bool multiple(int x, int y)
+{
+  return x==0 ? true : (y==0 ? false : x%y == 0);
+}
+
+//Fonction triangleEqui
+//Données : a : nombre, b : nombre, c : nombre
+//Résultat : Booléen, true si a,b et c sont les longeurs des cotés d'un triangle équilatéral, false sinon
+bool triangleEqui(int a, int b, int c)
+{
+  return (a==b)&&(b==c);
+}
+
+//Fonction triangle
+//Données : a : nombre, b : nombre, c : nombre
+//Résultat : Booléen, true si a,b et c sont les longeurs des cotés d'un triangle, false sinon
+bool triangle(int a, int b, int c)
+{
+  return (a > b+c) && (b > a+c) && (c > a+b);
+}
+
+//Fonction triangleRect
+//Données : a : nombre, b : nombre, c : nombre
+//Résultat : Booléen, true si a,b et c sont les longeurs des cotés d'un triangle rectangle, false sinon
+bool triangleRect(int a, int b, int c)
+{
+  return (a == sqrt(pow(b,2)+pow(c,2))) || (b == sqrt(pow(a,2)+pow(c,2))) || (c == sqrt(pow(a,2)+pow(b,2)));
+}
+
+//Fonction ouExcl
+//Donées : a : booléen, b : booléen
+//Résultat : Booléen, le "ou" exculsif de a et b (soit l'un, soit l'autre, pas les deux)
+bool ouExcl(bool a, bool b)
+{
+  return (a || b) && !(a && b);
+}
+
+//Fonction mul2ou3
+//Donées : n : nombre
+//Résultat : Booléen, true si n est multiple de 3 ou de 2 mais pas de 6, sinon false
+bool mul2ou3(int n)
+{
+  return ouExcl((n%2 == 0),(n%3 == 0));
+}
+
+//Fonction memeDizaine
+//Donées : a : nombre, b : nombre
+//Résultat : Booléen, true si a et b sont dans la même dizaine, false sinon
+bool memeDizaine(int a, int b)
+{
+  return (a/10) == (b/10);
+}
+
+//Fonction memeParite
+//Donées : a : nombre, b : nombre
+//Résultat : Booléen, true si a et b sont tout les deux impairs ou tout les deux pairs, false sinon
+bool memeParite(int a, int b)
+{
+  return ((a/2 == 0) && (b/2 == 0)) || ((a/2 == 1) && (b/2 == 1));
+}
+
+//Fonction gainRoulette
+//Donées : mise : nombre, numJoue : nombre, numSorti : nombre)
+//Résultat : nombre, gain au jeu de la roulette
+int gainRoulette(int mise, int numJoue, int numSorti)
+{
+  return numJoue == numSorti ? 20*mise : ( memeDizaine(numJoue,numSorti) ? 5*mise : ( memeParite(numJoue,numSorti) ? 2*mise : 0 ));
+}
+
+//Fonction estPair
+//Donées : n : nombre
+//Résultat : Booléen, true si n est paire, false sinon
+bool estPair(int n)
+{
+  return n==0 ? true : n>0 ? !(estPair(n-1)) : !(estPair(n+1)); 
+}
+
+//Fonction existeMul11
+//Donées : a : nombre, b : nombre
+//Résultat : Booléen, true si il existe un multiple de 11 dans l'intervalle [a,b], false sinon
+bool existeMul11(int a, int b)
+{
+  return a<=b && (a%11 == 0 ||  existeMul11(a+1,b));
+}
+
+//Fonction maxMul11
+//Donées : a : nombre, b : nombre
+//Résultat : Nombre, -1 si il n'y a pas de multiple de 11 dans [a,b], sinon, le plus grand de ces multiples
+int maxMul11(int a, int b)
+{
+  return b>=a ? ( b%11 == 0 ? b : maxMul11(a,b-1) ) : -1;
+}
+
+//Fonction nbMul11
+//Donées : a : nombre, b : nombre
+//Résultat : Nombre, le nombre de multiple de 11 entre a et b
+int nbMul11(int a, int b)
+{
+  return b>=a ? (b%11 == 0 ? 1 + nbMul11(a,b-1) : nbMul11(a,b-1)) : 0;
+}
+
+//Fonction somMul11
+//Donées : a : nombre, b : nombre
+//Résultat : Nombre, la somme de tout les multiples de 11 comprient dans l'intervalle [a,b]
+int somMul11(int a, int b)
+{
+  return b>=a ? (b%11 == 0 ? b + nbMul11(a,b-1) : nbMul11(a,b-1)) : 0;
+}
+
+//Fonction nbChifDec
+//Donées : n : nombre
+//Résultat : Nombre, le nombre de chiffre qui compose n 
+int nbChifDec(int n)
+{
+  return n>=10 ? 1 + nbChifDec(n/10) : 1;
+}
+
+//Fonction chifRang
+//Donées : n : nombre, k : nombre
+//Résultat : Nombre, le chiffre de rang k dans n
+int chifRang(int n, int k)
+{
+  return nbChifDec(n)>=k ? int(floor(n/pow(10,k-1)))%10 : 0;
+}
+
+//Fonction somChif
+//Données : n : nombre
+//Résultat : Nombre, la somme de tout les chiffres de n
+int somChif(int n)
+{
+  return n<10 ? n : n%10 + somChif(n/10);
+}
+
+//Fonction RacineNumerique
+//Donées : n : nombre
+//Résultat : Nombre, la racin numérique de n
+int RacineNumerique(int n)
+{
+  return n>=10 ? RacineNumerique(somChif(n)) : n;
+}
+
+//Fonction invChif
+//Donées : n : nombre
+//Résultat : Nombre, le nombre n écrit dans le sens inverse
+int invChif(int n)
+{
+  return (n%10) == n ? n : (n%10)*pow(10,nbChifDec(n)) + invChif(n/10);
+}
